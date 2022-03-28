@@ -19,6 +19,7 @@ final class CountriesListPresenter: CountriesListPresenterType {
     }
     
     func requestContries() {
+        viewController?.show(with: .loading)
         repository.getCountries() { [weak self] result in
             switch result {
             case .success(let response):

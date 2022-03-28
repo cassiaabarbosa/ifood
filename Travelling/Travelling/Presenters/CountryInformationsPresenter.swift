@@ -30,7 +30,6 @@ final class CountryInformationsPresenter: CountryInformationsPresenterType {
          repository: CountryRepositoryType = CountryRepository()) {
         self.country = country
         self.repository = repository
-        viewController?.updateViewName(with: country.name)
     }
     
     private func appendSubtitles() {
@@ -88,9 +87,7 @@ final class CountryInformationsPresenter: CountryInformationsPresenterType {
     }
     
     func requestContryInformations() {
-        DispatchQueue.main.async {
-            self.viewController?.show(with: .loading)
-        }
+        self.viewController?.show(with: .loading)
         repository.getCountryInformations(url: country.url) { [weak self] result in
             switch result {
             case .success(let response):
@@ -108,14 +105,10 @@ final class CountryInformationsPresenter: CountryInformationsPresenterType {
                 self?.informations = informations
                 self?.viewController?.updateViewName(with: "\(informations.name) (\(informations.abbreviation))")
                 self?.appendSubtitles()
-                DispatchQueue.main.async {
-                    self?.viewController?.show(with: .ready)
-                }
+                self?.viewController?.show(with: .ready)
                 
             case .failure(_):
-                DispatchQueue.main.async {
-                    self?.viewController?.show(with: .error)
-                }
+                self?.viewController?.show(with: .error)
             }
         }
     }
