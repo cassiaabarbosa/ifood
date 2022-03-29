@@ -57,10 +57,12 @@ final class CountryInformationView: UIView {
             print("Erro")
         case .loading:
             tableView.isHidden = true
-            print("Loaidng")
+            print("Loading")
         case .ready:
-            tableView.isHidden = false
-            tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.isHidden = false
+                self.tableView.reloadData()
+            }
         }
     }
 }

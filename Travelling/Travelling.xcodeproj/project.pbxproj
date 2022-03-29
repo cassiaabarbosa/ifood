@@ -40,6 +40,11 @@
 		83AAF8F827F2746000B6D579 /* CountriesListViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AAF8F727F2746000B6D579 /* CountriesListViewControllerSpy.swift */; };
 		83AAF8FA27F2773900B6D579 /* CountryInformationsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AAF8F927F2773900B6D579 /* CountryInformationsPresenterTests.swift */; };
 		83AAF8FC27F277AA00B6D579 /* CountryInformationsViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AAF8FB27F277AA00B6D579 /* CountryInformationsViewControllerSpy.swift */; };
+		83AAF8FE27F27FBC00B6D579 /* CountryCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AAF8FD27F27FBC00B6D579 /* CountryCellTests.swift */; };
+		83AAF90427F2812D00B6D579 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 83AAF90327F2812D00B6D579 /* SnapshotTesting */; };
+		83AAF90627F282C000B6D579 /* CountryInformationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AAF90527F282C000B6D579 /* CountryInformationCellTests.swift */; };
+		83AAF90827F283AD00B6D579 /* MapHeaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AAF90727F283AD00B6D579 /* MapHeaderTests.swift */; };
+		83AAF90A27F2846400B6D579 /* MainCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AAF90927F2846400B6D579 /* MainCoordinatorTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +94,10 @@
 		83AAF8F727F2746000B6D579 /* CountriesListViewControllerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListViewControllerSpy.swift; sourceTree = "<group>"; };
 		83AAF8F927F2773900B6D579 /* CountryInformationsPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryInformationsPresenterTests.swift; sourceTree = "<group>"; };
 		83AAF8FB27F277AA00B6D579 /* CountryInformationsViewControllerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryInformationsViewControllerSpy.swift; sourceTree = "<group>"; };
+		83AAF8FD27F27FBC00B6D579 /* CountryCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCellTests.swift; sourceTree = "<group>"; };
+		83AAF90527F282C000B6D579 /* CountryInformationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryInformationCellTests.swift; sourceTree = "<group>"; };
+		83AAF90727F283AD00B6D579 /* MapHeaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHeaderTests.swift; sourceTree = "<group>"; };
+		83AAF90927F2846400B6D579 /* MainCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinatorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83AAF90427F2812D00B6D579 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +125,10 @@
 				83AAF8F427F2715300B6D579 /* Doubles */,
 				83AAF8F227F270DE00B6D579 /* CountriesListPresenterTests.swift */,
 				83AAF8F927F2773900B6D579 /* CountryInformationsPresenterTests.swift */,
+				83AAF8FD27F27FBC00B6D579 /* CountryCellTests.swift */,
+				83AAF90527F282C000B6D579 /* CountryInformationCellTests.swift */,
+				83AAF90727F283AD00B6D579 /* MapHeaderTests.swift */,
+				83AAF90927F2846400B6D579 /* MainCoordinatorTests.swift */,
 			);
 			path = TravellingTests;
 			sourceTree = "<group>";
@@ -264,6 +278,9 @@
 				830184E127F11E0700FDC824 /* PBXTargetDependency */,
 			);
 			name = TravellingTests;
+			packageProductDependencies = (
+				83AAF90327F2812D00B6D579 /* SnapshotTesting */,
+			);
 			productName = TravellingTests;
 			productReference = 830184DC27F11E0700FDC824 /* TravellingTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -281,6 +298,8 @@
 			dependencies = (
 			);
 			name = Travelling;
+			packageProductDependencies = (
+			);
 			productName = Travelling;
 			productReference = 8393782327EE873D00A423F6 /* Travelling.app */;
 			productType = "com.apple.product-type.application";
@@ -313,6 +332,9 @@
 				Base,
 			);
 			mainGroup = 8393781A27EE873D00A423F6;
+			packageReferences = (
+				83AAF90227F2812D00B6D579 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+			);
 			productRefGroup = 8393782427EE873D00A423F6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -348,9 +370,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				83AAF8F827F2746000B6D579 /* CountriesListViewControllerSpy.swift in Sources */,
+				83AAF90827F283AD00B6D579 /* MapHeaderTests.swift in Sources */,
+				83AAF90A27F2846400B6D579 /* MainCoordinatorTests.swift in Sources */,
 				83AAF8F627F2719400B6D579 /* CountryRepositoryMock.swift in Sources */,
 				83AAF8FA27F2773900B6D579 /* CountryInformationsPresenterTests.swift in Sources */,
 				83AAF8FC27F277AA00B6D579 /* CountryInformationsViewControllerSpy.swift in Sources */,
+				83AAF90627F282C000B6D579 /* CountryInformationCellTests.swift in Sources */,
+				83AAF8FE27F27FBC00B6D579 /* CountryCellTests.swift in Sources */,
 				83AAF8F327F270DE00B6D579 /* CountriesListPresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -645,6 +671,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		83AAF90227F2812D00B6D579 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		83AAF90327F2812D00B6D579 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 83AAF90227F2812D00B6D579 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8393781B27EE873D00A423F6 /* Project object */;
 }
