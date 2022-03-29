@@ -8,40 +8,36 @@
 import Foundation
 
 class CountryRepository: CountryRepositoryType {
+    
+    private let dataTask: TravellingDataTask
+    
+    init(dataTask: TravellingDataTask = URLSession.shared) {
+        self.dataTask = dataTask
+    }
+    
     func getCountries(_ completion: @escaping (Result<[CountriesResponse], Error>) -> Void) {
-        URLSession.shared.decodedDataTask(with: .getCountries, decodeTo: [CountriesResponse].self, completion)
+        guard let url = URL(string: "https://travelbriefing.org/countries.json") else { return }
+        let urlRequest = URLRequest(url: url)
+        dataTask.dataTask(with: urlRequest) { data, _, error in
+            if let data = data {
+                do {
+                    let result = try JSONDecoder().decode([CountriesResponse].self, from: data)
+                    DispatchQueue.main.async {
+                        completion(.success(result))
+                    }
+                } catch let error {
+                    completion(.failure(error))
+                }
+            }
+        }.resume()
     }
     
     func getCountryInformations(url: URL, _ completion: @escaping (Result<CountryInformationsResponse, Error>) -> Void) {
-        URLSession.shared.decodedDataTask(with: url, decodeTo: CountryInformationsResponse.self, completion)
-    }
-}
-
-extension URL {
-    static var getCountries: URL? {
-        makeForEndpoint("countries.json")
-    }
-}
-
-private extension URL {
-    static private func makeForEndpoint(_ endpoint: String) -> URL? {
-        return URL(string: "https://travelbriefing.org/\(endpoint)")
-    }
-}
-
-extension URLSession {
-    func decodedDataTask<T: Decodable>(with url: URL?,
-                                       decodeTo type: T.Type,
-                                       _ completion: @escaping (Result<T, Error>) -> Void ) {
-        
-        guard let url = url else {
-            completion(.failure(NSError(domain: "invalid URL", code: 0)))
-            return
-        }
-        dataTask(with: url) { data, _, error in
+        let urlRequest = URLRequest(url: url)
+        dataTask.dataTask(with: urlRequest) { data, _, error in
             if let data = data {
                 do {
-                    let result = try JSONDecoder().decode(type.self, from: data)
+                    let result = try JSONDecoder().decode(CountryInformationsResponse.self, from: data)
                     DispatchQueue.main.async {
                         completion(.success(result))
                     }
@@ -52,3 +48,10 @@ extension URLSession {
         }.resume()
     }
 }
+
+
+protocol TravellingDataTask {
+    func dataTask(with: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask
+}
+
+extension URLSession: TravellingDataTask {}

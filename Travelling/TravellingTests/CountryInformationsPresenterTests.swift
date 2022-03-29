@@ -105,7 +105,7 @@ class CountryInformationsPresenterTests: XCTestCase {
                                                                                                             fire: "000"),
                                                                                        vaccinations: [Vaccinations(name: "Malária")]))
         sut.requestContryInformations()
-        XCTAssertEqual(sut.location(), CountryLocation(coordinate: CLLocationCoordinate2D(latitude: 1.1, longitude: 1.1)))
+        XCTAssertEqual(sut.location().coordinate, CLLocationCoordinate2D(latitude: 1.1, longitude: 1.1))
     }
 }
 

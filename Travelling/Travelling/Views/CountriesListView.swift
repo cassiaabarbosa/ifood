@@ -13,7 +13,6 @@ final class CountriesListView: UIView {
     var tableViewDelegate: UITableViewDelegate?
     var tableViewDataSource: UITableViewDataSource?
     
-    
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -55,9 +54,11 @@ final class CountriesListView: UIView {
         case .error:
             print("Erro")
         case .loading:
-            print("Loaidng")
+            print("Loading")
         case .ready:
-            tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
 }

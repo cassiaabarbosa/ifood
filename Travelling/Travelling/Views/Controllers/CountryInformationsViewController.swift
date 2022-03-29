@@ -52,7 +52,6 @@ extension CountryInformationsViewController: CountryInformationsViewControllerTy
     }
 }
 
-
 extension CountryInformationsViewController: UITableViewDelegate {}
 
 extension CountryInformationsViewController: UITableViewDataSource {

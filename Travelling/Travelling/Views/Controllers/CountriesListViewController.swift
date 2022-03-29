@@ -40,7 +40,6 @@ final class CountriesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableViewObjects()
-               
         presenter.requestContries()
         setupSearchcontroller()
     }

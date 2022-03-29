@@ -4,7 +4,6 @@ import UIKit
 final class MainCoordinator: Coordinator {
 
     weak var currentController: UIViewController?
-    
     var navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
