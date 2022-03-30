@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ListedCountry {
+struct ListedCountry: Equatable {
     let name: String
     let url: URL
 }

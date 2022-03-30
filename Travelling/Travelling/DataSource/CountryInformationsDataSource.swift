@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import MapKit
 
 final class CountryInformationsDataSource: NSObject, CountryInformationsDataSourceType {
     
@@ -28,9 +27,9 @@ final class CountryInformationsDataSource: NSObject, CountryInformationsDataSour
             return UITableViewCell()
         }
         guard let text = getTitle?(indexPath.row),
-              let dettailText = getDetail?(indexPath.row) else { return UITableViewCell()}
+              let detailText = getDetail?(indexPath.row) else { return UITableViewCell()}
         cell.show(text: text,
-                  detailText: dettailText)
+                  detailText: detailText)
         return cell
     }
     

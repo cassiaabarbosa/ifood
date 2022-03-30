@@ -31,8 +31,7 @@ final class CountryInformationsDataSourceTypeMock: NSObject, CountryInformations
             return UITableViewCell()
         }
         
-        cell.show(text: "Latitude",
-                  detailText: "1.1")
+        cell.show(text: "Latitude", detailText: "1.1")
         return cell
     }
     
@@ -52,6 +51,4 @@ final class CountryInformationsDataSourceTypeMock: NSObject, CountryInformations
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         300
     }
-    
-    
 }
