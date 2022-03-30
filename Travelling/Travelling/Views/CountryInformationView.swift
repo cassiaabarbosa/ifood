@@ -61,18 +61,16 @@ extension CountryInformationView: CountryInformationViewType {
     }
     
     func updateContent(state: State) {
-        DispatchQueue.main.async { [weak self] in
-            switch state {
-            case .error:
-                self?.tableView.isHidden = true
-                print("Erro")
-            case .loading:
-                self?.tableView.isHidden = true
-                print("Loading")
-            case .ready:
-                self?.tableView.isHidden = false
-                self?.tableView.reloadData()
-            }
+        switch state {
+        case .error:
+            self.tableView.isHidden = true
+            print("Erro")
+        case .loading:
+            self.tableView.isHidden = true
+            print("Loading")
+        case .ready:
+            self.tableView.isHidden = false
+            self.tableView.reloadData()
         }
     }
 }

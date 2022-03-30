@@ -47,7 +47,7 @@ extension CountryInformationsViewController: CountryInformationsViewControllerTy
     func show(with state: State) {
         contentView.updateContent(state: state)
     }
-    
+
     func updateViewName(with name: String) {
         navigationItem.title = name
     }
