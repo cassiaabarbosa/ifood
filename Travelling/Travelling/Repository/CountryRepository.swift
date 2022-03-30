@@ -9,9 +9,9 @@ import Foundation
 
 class CountryRepository: CountryRepositoryType {
     
-    private let dataTask: TravellingDataTask
+    private let dataTask: TravellingServiceType
     
-    init(dataTask: TravellingDataTask = URLSession.shared) {
+    init(dataTask: TravellingServiceType = URLSession.shared) {
         self.dataTask = dataTask
     }
     
@@ -26,7 +26,9 @@ class CountryRepository: CountryRepositoryType {
                         completion(.success(result))
                     }
                 } catch let error {
-                    completion(.failure(error))
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
                 }
             }
         }.resume()
@@ -42,16 +44,22 @@ class CountryRepository: CountryRepositoryType {
                         completion(.success(result))
                     }
                 } catch let error {
-                    completion(.failure(error))
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
                 }
             }
         }.resume()
     }
 }
 
-
-protocol TravellingDataTask {
-    func dataTask(with: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask
+extension URLSession: TravellingServiceType {
+    func dataTask(with: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> TravellingDataTaskType {
+        
+        let task: URLSessionDataTask = self.dataTask(with: with, completionHandler: completionHandler)
+        
+        return task
+    }
 }
 
-extension URLSession: TravellingDataTask {}
+extension URLSessionDataTask: TravellingDataTaskType {}

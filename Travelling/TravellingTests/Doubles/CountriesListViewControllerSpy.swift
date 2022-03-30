@@ -10,11 +10,12 @@ import UIKit
 @testable import Travelling
 
 final class CountriesListViewControllerSpy: UIViewController, CountriesListViewControllerType {
-    
+    var didShow: (() -> Void)?
     private(set) var showCount =  0
     private(set) var showState: State?
     func show(with state: State) {
         showCount += 1
         showState = state
+        didShow?()
     }
 }
