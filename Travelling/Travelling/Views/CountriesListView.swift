@@ -10,8 +10,12 @@ import UIKit
 
 final class CountriesListView: UIView {
     
-    var tableViewDelegate: UITableViewDelegate?
-    var tableViewDataSource: UITableViewDataSource?
+    var numberOfRowsInSectionAction: (() -> Int)?
+    var didSelectRowAtAction: ((ListedCountry) -> Void)?
+    var getCountryURL: ((Int) -> URL)?
+    var getCountryName: ((Int) -> String)?
+    
+    private var dataSourceDelegate: CountriesListDataSourceType
     
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -19,8 +23,9 @@ final class CountriesListView: UIView {
         return tableView
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(dataSourceDelegate: CountriesListDataSourceType = CountriesListDataSource()) {
+        self.dataSourceDelegate = dataSourceDelegate
+        super.init(frame: .zero)
         buildViewHierarchy()
         applyConstraints()
         backgroundColor = .systemBackground
@@ -42,22 +47,31 @@ final class CountriesListView: UIView {
             tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor)
         ])
     }
-    
+}
+
+extension CountriesListView: CountriesListViewType {
     func setupTableView() {
-        tableView.delegate = tableViewDelegate
-        tableView.dataSource = tableViewDataSource
+        dataSourceDelegate.numberOfRowsInSectionAction = numberOfRowsInSectionAction
+        dataSourceDelegate.didSelectRowAtAction = didSelectRowAtAction
+        dataSourceDelegate.getCountryName = getCountryName
+        dataSourceDelegate.getCountryURL = getCountryURL
+        tableView.delegate = dataSourceDelegate
+        tableView.dataSource = dataSourceDelegate
         tableView.register(CountryCell.self, forCellReuseIdentifier: CountryCell.id)
     }
     
     func updateContent(state: State) {
-        switch state {
-        case .error:
-            print("Erro")
-        case .loading:
-            print("Loading")
-        case .ready:
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            switch state {
+            case .error:
+                self?.tableView.isHidden = true
+                print("Erro")
+            case .loading:
+                self?.tableView.isHidden = true
+                print("Loading")
+            case .ready:
+                self?.tableView.isHidden = false
+                self?.tableView.reloadData()
             }
         }
     }

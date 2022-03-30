@@ -10,12 +10,12 @@ import UIKit
 
 final class CountriesListViewController: UIViewController {
     
-    private let contentView: CountriesListView
+    private let contentView: CountriesListViewType
     private let presenter: CountriesListPresenterType
     private let searchController = UISearchController(searchResultsController: nil)
     weak var delegate: CountriesListViewControllerDelegate?
     
-    init(contentView: CountriesListView = CountriesListView(),
+    init(contentView: CountriesListViewType = CountriesListView(),
          presenter: CountriesListPresenterType = CountriesListPresenter()) {
         self.contentView = contentView
         self.presenter = presenter
@@ -39,14 +39,16 @@ final class CountriesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableViewObjects()
+        bindViewActions()
         presenter.requestContries()
         setupSearchcontroller()
     }
     
-    private func setupTableViewObjects() {
-        contentView.tableViewDataSource = self
-        contentView.tableViewDelegate = self
+    private func bindViewActions() {
+        contentView.numberOfRowsInSectionAction = presenter.numberOfRowsInSection
+        contentView.didSelectRowAtAction = delegate?.goToInformations
+        contentView.getCountryURL = presenter.countryURL
+        contentView.getCountryName = presenter.countryName
         contentView.setupTableView()
     }
     
@@ -61,37 +63,6 @@ final class CountriesListViewController: UIViewController {
 extension CountriesListViewController: CountriesListViewControllerType {
     func show(with state: State) {
         contentView.updateContent(state: state)
-    }
-}
-
-extension CountriesListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        let countryURL = presenter.countryURL(of: indexPath.row)
-        let countryName = presenter.countryName(of: indexPath.row)
-        let country = ListedCountry(name: countryName, url: countryURL)
-        delegate?.goToInformations(with: country)
-        cell?.isSelected = false
-    }
-}
-
-extension CountriesListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.numberOfRowsInSection()
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCell.id, for: indexPath) as? CountryCell else {
-            return UITableViewCell()
-        }
-        
-        let country = presenter.countryName(of: indexPath.row)
-        cell.updateName(with: country)
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        50
     }
 }
 

@@ -7,8 +7,9 @@
 
 import Foundation
 @testable import Travelling
+import UIKit
 
-final class CountryInformationsViewControllerSpy: CountryInformationsViewControllerType {
+final class CountryInformationsViewControllerSpy: UIViewController, CountryInformationsViewControllerType {
 
     private(set) var updateViewNameCount =  0
     private(set) var name: String?

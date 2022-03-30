@@ -10,10 +10,10 @@ import UIKit
 
 final class CountryInformationsViewController: UIViewController {
     
-    private let contentView: CountryInformationView
+    private let contentView: CountryInformationViewType
     private let presenter: CountryInformationsPresenterType
     
-    init(contentView: CountryInformationView = CountryInformationView(),
+    init(contentView: CountryInformationViewType = CountryInformationView(),
          presenter: CountryInformationsPresenterType) {
         self.contentView = contentView
         self.presenter = presenter
@@ -31,13 +31,14 @@ final class CountryInformationsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableViewObjects()
+        bindViewActions()
         presenter.requestContryInformations()
     }
     
-    private func setupTableViewObjects() {
-        contentView.tableViewDataSource = self
-        contentView.tableViewDelegate = self
+    private func bindViewActions() {
+        contentView.getLocation = presenter.location
+        contentView.getTitle = presenter.title
+        contentView.getDetail = presenter.subtitle
         contentView.setupTableView()
     }
 }
@@ -49,43 +50,5 @@ extension CountryInformationsViewController: CountryInformationsViewControllerTy
     
     func updateViewName(with name: String) {
         navigationItem.title = name
-    }
-}
-
-extension CountryInformationsViewController: UITableViewDelegate {}
-
-extension CountryInformationsViewController: UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        1
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MapHeader.id) as? MapHeader else {
-            return UITableViewHeaderFooterView()
-        }
-        header.add(location: presenter.location())
-        return header
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        9
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryInformationCell.id, for: indexPath) as? CountryInformationCell else {
-            return UITableViewCell()
-        }
-        cell.show(text: presenter.title(of: indexPath.row),
-                  detailText: presenter.subtitle(of: indexPath.row))
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        UITableView.automaticDimension
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-       300
     }
 }

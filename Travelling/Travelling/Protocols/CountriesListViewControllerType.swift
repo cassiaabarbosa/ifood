@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import UIKit
 
-protocol CountriesListViewControllerType: AnyObject {
+protocol CountriesListViewControllerType where Self: UIViewController {
     func show(with state: State)
 }
 

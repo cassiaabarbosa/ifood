@@ -10,8 +10,11 @@ import UIKit
 
 final class CountryInformationView: UIView {
     
-    var tableViewDelegate: UITableViewDelegate?
-    var tableViewDataSource: UITableViewDataSource?
+    var getTitle: ((Int) -> String)?
+    var getDetail: ((Int) -> String)?
+    var getLocation: (() -> CountryLocation)?
+    
+    private let dataSourceDelegate: CountryInformationsDataSourceType
     
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -19,8 +22,9 @@ final class CountryInformationView: UIView {
         return tableView
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(dataSourceDelegate: CountryInformationsDataSourceType = CountryInformationsDataSource()) {
+        self.dataSourceDelegate = dataSourceDelegate
+        super.init(frame: .zero)
         buildViewHierarchy()
         applyConstraints()
         backgroundColor = .systemBackground
@@ -42,26 +46,32 @@ final class CountryInformationView: UIView {
             tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor)
         ])
     }
-    
+}
+   
+extension CountryInformationView: CountryInformationViewType {
     func setupTableView() {
-        tableView.delegate = tableViewDelegate
-        tableView.dataSource = tableViewDataSource
+        dataSourceDelegate.getLocation = getLocation
+        dataSourceDelegate.getTitle = getTitle
+        dataSourceDelegate.getDetail = getDetail
+        tableView.delegate = dataSourceDelegate
+        tableView.dataSource = dataSourceDelegate
+        tableView.register(CountryCell.self, forCellReuseIdentifier: CountryCell.id)
         tableView.register(CountryInformationCell.self, forCellReuseIdentifier: CountryInformationCell.id)
         tableView.register(MapHeader.self, forHeaderFooterViewReuseIdentifier: MapHeader.id)
     }
     
     func updateContent(state: State) {
-        switch state {
-        case .error:
-            tableView.isHidden = true
-            print("Erro")
-        case .loading:
-            tableView.isHidden = true
-            print("Loading")
-        case .ready:
-            DispatchQueue.main.async {
-                self.tableView.isHidden = false
-                self.tableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            switch state {
+            case .error:
+                self?.tableView.isHidden = true
+                print("Erro")
+            case .loading:
+                self?.tableView.isHidden = true
+                print("Loading")
+            case .ready:
+                self?.tableView.isHidden = false
+                self?.tableView.reloadData()
             }
         }
     }
