@@ -32,15 +32,13 @@ class CountryInformationViewTests: XCTestCase {
         sut.updateContent(state: .ready)
         assertSnapshot(matching: sut, as: .image)
     }
-    
-    // TODO: Refazer
+
     func testUpdateContentWhenStateIsLoading() {
         sut.setupTableView()
         sut.updateContent(state: .loading)
         assertSnapshot(matching: sut, as: .image)
     }
     
-    // TODO: Refazer
     func testUpdateContentWhenStateIsError() {
         sut.setupTableView()
         sut.updateContent(state: .error)

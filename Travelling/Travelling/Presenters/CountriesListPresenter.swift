@@ -8,7 +8,7 @@
 import UIKit
 
 final class CountriesListPresenter: CountriesListPresenterType {
-
+    
     weak var viewController: CountriesListViewControllerType?
     private var repository: CountryRepositoryType
     private var countries: [ListedCountry] = []
@@ -25,7 +25,7 @@ final class CountriesListPresenter: CountriesListPresenterType {
             case .success(let response):
                 let countries = response.map {
                     ListedCountry(name: $0.name,
-                            url: $0.url)
+                                  url: $0.url)
                 }
                 self?.filteredCountries = countries
                 self?.countries = countries
@@ -45,7 +45,6 @@ final class CountriesListPresenter: CountriesListPresenterType {
                 $0.name.uppercased().contains(content.uppercased())
             }
         }
-
         viewController?.show(with: .ready)
     }
     
